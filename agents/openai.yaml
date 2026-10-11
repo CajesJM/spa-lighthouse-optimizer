@@ -1,0 +1,4 @@
+interface:
+  display_name: "SPA Lighthouse Optimizer"
+  short_description: "Audit and improve SPA Lighthouse scores"
+  default_prompt: "Use $spa-lighthouse-optimizer to audit this SPA on mobile and desktop, then make evidence-based improvements toward 100 in all four Lighthouse categories."
