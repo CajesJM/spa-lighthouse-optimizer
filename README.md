@@ -1,65 +1,89 @@
 # SPA Lighthouse Optimizer
 
-A standalone Agent Skill that guides a coding agent through measuring and improving an existing single-page website toward 100 Lighthouse scores in Performance, Accessibility, Best Practices, and SEO. It can be used on projects built with any frontend framework. Results depend on the site, hosting, browser, and third-party resources; the skill reports measured results and remaining blockers.
+An installable Agent Skill that helps a coding agent **audit and improve an existing single-page app (SPA)** across Lighthouse Performance, Accessibility, Best Practices, and SEO. It works with any frontend framework because it measures the finished website, then guides changes in that website's own repository.
 
-## Install
+| 🟦 Install once | 🟩 Open your project |
+| --- | --- |
+| Install the skill in your agent's skills directory, outside your website. | Start a new agent session in the website repository and ask it to use the skill. |
+| 🟨 Measure and improve | 🟪 Verify the result |
+| Audit representative routes on mobile and desktop, then fix findings supported by evidence. | Rebuild, test behavior, and compare new Lighthouse reports with the baseline. |
 
-Once the package is published to npm, install the skill with one command:
+> **100 is a goal, not a guarantee.** Scores can vary between runs and depend on hosting, third-party services, and the tested page. The skill reports measured results and unresolved issues; it does not deploy your site without authorization.
+
+## Requirements
+
+- Node.js 20 or newer and a local Chrome/Chromium installation for the included Lighthouse tools.
+- An AI coding agent that supports `SKILL.md`-style skills. The default installer target is **Codex**; for another compatible agent, provide its skills directory with `--target`.
+- Access to the website's repository if you want the agent to make fixes. A deployed URL alone is enough for an audit, not for editing its source.
+
+## 1. Install the skill
+
+When the package is available on npm, choose **one** of these commands:
+
+| Package manager | Command |
+| --- | --- |
+| npm | `npx spa-lighthouse-optimizer` |
+| Yarn 2+ | `yarn dlx spa-lighthouse-optimizer` |
+
+This installs to `$CODEX_HOME/skills/spa-lighthouse-optimizer`, or `~/.codex/skills/spa-lighthouse-optimizer` if `CODEX_HOME` is unset. It also installs Lighthouse in the skill directory. **Restart your agent session** after installation.
+
+If the package is not yet published, use this checked-out repository instead:
 
 ```sh
-npm exec --yes --package=spa-lighthouse-optimizer -- spa-lighthouse-optimizer install
+npm ci
+node scripts/install.mjs
 ```
 
-With Yarn 2 or newer:
+Run those two commands **from this repository**. The installer will not overwrite an existing installation; move or remove the old skill folder before reinstalling.
+
+For another compatible agent, install into its documented skills directory:
 
 ```sh
-yarn dlx spa-lighthouse-optimizer install
+npx spa-lighthouse-optimizer --target /path/to/agent/skills
 ```
 
-Both commands install the skill under `$CODEX_HOME/skills/spa-lighthouse-optimizer`, or `~/.codex/skills/spa-lighthouse-optimizer` when `CODEX_HOME` is unset. For another agent, pass its skills directory with `--target`. With npm, use `--call` so npm passes the option to the installer:
+For an unpublished checkout, use `node scripts/install.mjs --target /path/to/agent/skills` instead. The target is the **parent skills directory**; the installer creates `spa-lighthouse-optimizer` inside it. Installation does not make a model with no skills support understand the format automatically.
 
-```sh
-npm exec --yes --package=spa-lighthouse-optimizer --call "spa-lighthouse-optimizer install --target /path/to/agent/skills"
-```
+## 2. Ask your agent to use it
 
-The installer refuses to replace an existing skill folder, so move or remove an old installation before reinstalling. Start a new agent session after installation.
-
-For a persistent command, use `npm install -g spa-lighthouse-optimizer` and then `spa-lighthouse-optimizer install`. The package must be published before these registry commands work. Until then, the checked-out repository can be packed with `npm pack` and installed from the resulting tarball.
-
-Node.js 20 or newer and a local Chrome/Chromium installation are required for the included Lighthouse runner. The installer installs the runner dependency in the agent's skill folder. A manual copy of this repository also works; run `npm ci` in the copied folder first.
-
-## Use
-
-Open the target website repository in your agent and ask:
+Open your **website's repository** in a new agent session. For an audit and authorized fixes, ask:
 
 ```text
-Use $spa-lighthouse-optimizer to audit this SPA on mobile and desktop. The deployed URL is https://example.com. Fix the project issues you find, preserve its design and behavior, and report measured before/after scores. Do not deploy.
+Use $spa-lighthouse-optimizer to audit this SPA on mobile and desktop.
+The deployed URL is https://example.com. Fix issues in this project that the
+reports support, preserve its design and behavior, and report measured
+before/after scores. Do not deploy.
 ```
 
-For an audit without edits:
+For a report without changes:
 
 ```text
-Use $spa-lighthouse-optimizer to audit this SPA and give me a prioritized report. Do not change files.
+Use $spa-lighthouse-optimizer to audit this SPA and give me a prioritized
+report. Do not change files.
 ```
 
-The audit tools are independent of the target project. For a repeatable baseline:
+Replace the example URL with your site. Tell the agent which routes matter, whether it may edit the project, and whether deployment is allowed. It should test a production build or the deployed site—not only a development server.
+
+## 3. Run the audit tools yourself (optional)
+
+Run these commands **from the installed skill directory or this checkout**, not from the website repository. The URLs should point to a deployed site or a locally served production build.
 
 ```sh
 node scripts/audit-site.mjs --url https://example.com --url https://example.com/about --out-dir reports/baseline
 node scripts/analyze-report.mjs reports/baseline/route-1-mobile-1.json
 ```
 
-After changes, run the same audit into a new directory, then compare matching individual reports:
+By default, `audit-site.mjs` runs **three times per route on both mobile and desktop**. It saves individual JSON reports and `reports/baseline/summary.md` with median scores. The output directory must be new. Use `--runs 1` for a quick diagnostic pass, not a final score claim. If Chrome is not found automatically, add `--chrome-path <path-to-chrome>`.
+
+After project changes, audit the **same URLs** into a different directory and compare corresponding individual runs:
 
 ```sh
 node scripts/audit-site.mjs --url https://example.com --url https://example.com/about --out-dir reports/current
 node scripts/compare-reports.mjs --before reports/baseline/route-1-mobile-1.json --after reports/current/route-1-mobile-1.json
 ```
 
-Use the same URLs, Lighthouse version, and settings for comparisons. The summary reports medians; inspect individual runs for instability. For Windows, pass `--chrome-path` if Chrome is not discovered automatically. Keep reports private if pages contain sensitive data.
+Use the same Lighthouse version and settings for meaningful comparisons. A local production-build result does not prove the deployed site has the same score. Keep reports private when pages may contain sensitive data.
 
-## Scope
+## What the skill will and will not do
 
-The agent diagnoses before editing, preserves existing project decisions, verifies the affected site, and distinguishes local measurements from deployed results. Deployment requires the user's authorization. A 100 score is a target rather than a guaranteed outcome.
-
-This repository contains the skill and its local measurement tools. It does not need to be copied into each website.
+It diagnoses before editing, aims for the smallest evidence-based changes, checks affected interactions, and distinguishes local results from deployed results. It will not remove required features merely to boost a score, claim perfect accessibility from an automated audit, or promise four 100s. See [the skill workflow](SKILL.md) and [audit guidance](references/audit-workflow.md) for the full process.
