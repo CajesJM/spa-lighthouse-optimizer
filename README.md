@@ -4,15 +4,29 @@ A standalone Agent Skill that guides a coding agent through measuring and improv
 
 ## Install
 
-The repository folder itself is the skill. Clone or copy it to a personal skills directory supported by your agent, outside the website you want to optimize. For Codex, place the complete folder at `$CODEX_HOME/skills/spa-lighthouse-optimizer` (or `~/.codex/skills/spa-lighthouse-optimizer` when `CODEX_HOME` is unset), then start a new session. Other Agent Skills-compatible hosts can use the same `SKILL.md` folder; follow that host's skill-directory instructions. The GitHub source URL can be used once this repository is published; no project-level installation is needed.
-
-Install the optional Lighthouse runner dependency inside this skill folder:
+Once the package is published to npm, install the skill with one command:
 
 ```sh
-npm ci
+npm exec --yes --package=spa-lighthouse-optimizer -- spa-lighthouse-optimizer install
 ```
 
-Node.js 20 or newer and a local Chrome/Chromium installation are required for the included runner. The agent may also use an existing Lighthouse installation or browser tool.
+With Yarn 2 or newer:
+
+```sh
+yarn dlx spa-lighthouse-optimizer install
+```
+
+Both commands install the skill under `$CODEX_HOME/skills/spa-lighthouse-optimizer`, or `~/.codex/skills/spa-lighthouse-optimizer` when `CODEX_HOME` is unset. For another agent, pass its skills directory with `--target`. With npm, use `--call` so npm passes the option to the installer:
+
+```sh
+npm exec --yes --package=spa-lighthouse-optimizer --call "spa-lighthouse-optimizer install --target /path/to/agent/skills"
+```
+
+The installer refuses to replace an existing skill folder, so move or remove an old installation before reinstalling. Start a new agent session after installation.
+
+For a persistent command, use `npm install -g spa-lighthouse-optimizer` and then `spa-lighthouse-optimizer install`. The package must be published before these registry commands work. Until then, the checked-out repository can be packed with `npm pack` and installed from the resulting tarball.
+
+Node.js 20 or newer and a local Chrome/Chromium installation are required for the included Lighthouse runner. The installer installs the runner dependency in the agent's skill folder. A manual copy of this repository also works; run `npm ci` in the copied folder first.
 
 ## Use
 
@@ -28,15 +42,21 @@ For an audit without edits:
 Use $spa-lighthouse-optimizer to audit this SPA and give me a prioritized report. Do not change files.
 ```
 
-The runner and comparison tools are independent of the target project:
+The audit tools are independent of the target project. For a repeatable baseline:
 
 ```sh
-node scripts/run-lighthouse.mjs --url https://example.com --form-factor mobile --out reports/baseline-mobile.json
-node scripts/run-lighthouse.mjs --url https://example.com --form-factor desktop --out reports/baseline-desktop.json
-node scripts/compare-reports.mjs --before reports/baseline-mobile.json --after reports/current-mobile.json
+node scripts/audit-site.mjs --url https://example.com --url https://example.com/about --out-dir reports/baseline
+node scripts/analyze-report.mjs reports/baseline/route-1-mobile-1.json
 ```
 
-Use the same URL and form factor for each comparison. For Windows, pass `--chrome-path` if Chrome is not discovered automatically.
+After changes, run the same audit into a new directory, then compare matching individual reports:
+
+```sh
+node scripts/audit-site.mjs --url https://example.com --url https://example.com/about --out-dir reports/current
+node scripts/compare-reports.mjs --before reports/baseline/route-1-mobile-1.json --after reports/current/route-1-mobile-1.json
+```
+
+Use the same URLs, Lighthouse version, and settings for comparisons. The summary reports medians; inspect individual runs for instability. For Windows, pass `--chrome-path` if Chrome is not discovered automatically. Keep reports private if pages contain sensitive data.
 
 ## Scope
 

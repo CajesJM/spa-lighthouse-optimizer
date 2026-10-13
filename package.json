@@ -1,8 +1,23 @@
 {
   "name": "spa-lighthouse-optimizer",
   "version": "0.1.0",
-  "private": true,
+  "description": "Install an Agent Skill that audits and improves SPA Lighthouse scores",
   "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CajesJM/spa-lighthouse-optimizer.git"
+  },
+  "bin": {
+    "spa-lighthouse-optimizer": "scripts/install.mjs"
+  },
+  "files": [
+    "SKILL.md",
+    "agents/",
+    "references/",
+    "scripts/",
+    "npm-shrinkwrap.json"
+  ],
   "engines": {
     "node": ">=20"
   },
