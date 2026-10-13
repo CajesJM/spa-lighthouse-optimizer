@@ -7,8 +7,12 @@
     "": {
       "name": "spa-lighthouse-optimizer",
       "version": "0.1.0",
+      "license": "MIT",
       "dependencies": {
         "lighthouse": "^12.0.0"
+      },
+      "bin": {
+        "spa-lighthouse-optimizer": "scripts/install.mjs"
       },
       "engines": {
         "node": ">=20"
