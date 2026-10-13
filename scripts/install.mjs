@@ -6,17 +6,18 @@ import { fileURLToPath } from "node:url";
 
 const name = "spa-lighthouse-optimizer";
 const source = fileURLToPath(new URL("..", import.meta.url));
-const usage = `Usage: spa-lighthouse-optimizer install [--target <skills-directory>]
+const usage = `Usage: spa-lighthouse-optimizer [install] [--target <skills-directory>]
 
-Install the skill into Codex's personal skills directory by default. Pass --target
-to install into another agent's skills directory. The destination must be absent.`;
+Install the skill into Codex's personal skills directory by default. The install
+subcommand is optional. Pass --target to install into another agent's skills
+directory. The destination must be absent.`;
 
 function parseArgs(args) {
-  if (args.length === 0 || args.includes("--help") || args.includes("-h"))
+  if (args.includes("--help") || args.includes("-h"))
     return { help: true };
-  if (args[0] !== "install") throw new Error(`Unknown command: ${args[0]}`);
+  const start = args[0] === "install" ? 1 : 0;
   let target;
-  for (let index = 1; index < args.length; index += 1) {
+  for (let index = start; index < args.length; index += 1) {
     if (args[index] !== "--target")
       throw new Error(`Unknown option: ${args[index]}`);
     if (target !== undefined) throw new Error("Duplicate --target option");
