@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="SPA Lighthouse Optimizer is an installable Agent Skill for auditing, improving, and verifying Lighthouse results on single-page websites."
+    />
+    <meta
+      property="og:title"
+      content="SPA Lighthouse Optimizer — Measure. Fix. Verify."
+    />
+    <meta
+      property="og:description"
+      content="A practical Agent Skill for improving real SPAs with repeatable Lighthouse audits and evidence-based fixes."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./main.js" defer></script>
+    <title>SPA Lighthouse Optimizer — Measure. Fix. Verify.</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a
+          class="brand"
+          href="#top"
+          aria-label="SPA Lighthouse Optimizer, back to top"
+        >
+          <span class="brand-mark" aria-hidden="true"
+            ><span></span><span></span><span></span><span></span
+          ></span>
+          <span>SPA<span class="brand-divider">/</span>LIGHTHOUSE</span>
+        </a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Open navigation"
+        >
+          <span></span><span></span><span></span>
+        </button>
+        <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+          <a href="#workflow">Workflow</a>
+          <a href="#capabilities">Capabilities</a>
+          <a href="#install">Install</a>
+          <a
+            class="nav-github"
+            href="https://github.com/CajesJM/spa-lighthouse-optimizer"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub <span aria-hidden="true">↗</span></a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section id="top" class="hero section-shell">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="container hero-inner">
+          <div class="eyebrow">
+            <span class="live-dot" aria-hidden="true"></span> AN AGENT SKILL FOR
+            REAL-WORLD SPAs
+          </div>
+          <h1>Measure. Fix.<br /><em>Verify.</em></h1>
+          <p class="hero-lede">
+            A clearer path to a faster, more accessible website. Give your
+            coding agent a repeatable Lighthouse workflow—without asking it to
+            guess what to optimize.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#install"
+              >Get started <span aria-hidden="true">↗</span></a
+            >
+            <a class="button button-secondary" href="#workflow"
+              >Explore the workflow <span aria-hidden="true">↓</span></a
+            >
+          </div>
+          <p class="hero-note">
+            Works with your existing frontend stack. Installs outside your
+            project.
+          </p>
+
+          <div
+            class="console-wrap"
+            aria-label="Illustrative preview of the audit workflow"
+          >
+            <div class="console-orbit orbit-one" aria-hidden="true"></div>
+            <div class="console-orbit orbit-two" aria-hidden="true"></div>
+            <div class="console">
+              <div class="console-bar">
+                <div class="window-dots" aria-hidden="true">
+                  <i></i><i></i><i></i>
+                </div>
+                <span class="console-title"
+                  >spa-lighthouse-optimizer / workflow</span
+                >
+                <span class="console-status"><span></span> READY</span>
+              </div>
+              <div class="console-body">
+                <div
+                  class="console-tabs"
+                  role="tablist"
+                  aria-label="Workflow preview"
+                >
+                  <button
+                    type="button"
+                    role="tab"
+                    id="tab-audit"
+                    aria-selected="true"
+                    aria-controls="panel-audit"
+                    data-panel="audit"
+                  >
+                    01 <span>Audit</span>
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    id="tab-find"
+                    aria-selected="false"
+                    aria-controls="panel-find"
+                    tabindex="-1"
+                    data-panel="find"
+                  >
+                    02 <span>Find</span>
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    id="tab-verify"
+                    aria-selected="false"
+                    aria-controls="panel-verify"
+                    tabindex="-1"
+                    data-panel="verify"
+                  >
+                    03 <span>Verify</span>
+                  </button>
+                </div>
+                <div
+                  class="console-panel"
+                  id="panel-audit"
+                  role="tabpanel"
+                  aria-labelledby="tab-audit"
+                >
+                  <p class="console-comment">
+                    # Measure the pages people actually visit
+                  </p>
+                  <p class="console-command">
+                    <span>$</span> node scripts/audit-site.mjs
+                    <b>--url</b> https://example.com
+                    <b>--out-dir</b> reports/baseline
+                  </p>
+                  <div class="console-output">
+                    <span class="output-check">✓</span> Mobile + desktop
+                    <span class="output-separator">/</span> 3 runs per route
+                    <span class="output-separator">/</span> median summary
+                  </div>
+                </div>
+                <div
+                  class="console-panel"
+                  id="panel-find"
+                  role="tabpanel"
+                  aria-labelledby="tab-find"
+                  hidden
+                >
+                  <p class="console-comment">
+                    # Read the failing audits, not just the score
+                  </p>
+                  <p class="console-command">
+                    <span>$</span> node scripts/analyze-report.mjs
+                    reports/baseline/route-1-mobile-1.json
+                  </p>
+                  <div class="console-output">
+                    <span class="output-check">✓</span> Scored failures
+                    <span class="output-separator">/</span> element and URL
+                    evidence <span class="output-separator">/</span> prioritized
+                    fixes
+                  </div>
+                </div>
+                <div
+                  class="console-panel"
+                  id="panel-verify"
+                  role="tabpanel"
+                  aria-labelledby="tab-verify"
+                  hidden
+                >
+                  <p class="console-comment">
+                    # Rebuild, retest, then compare like for like
+                  </p>
+                  <p class="console-command">
+                    <span>$</span> node scripts/compare-reports.mjs
+                    <b>--before</b> baseline.json <b>--after</b> current.json
+                  </p>
+                  <div class="console-output">
+                    <span class="output-check">✓</span> Matching URL
+                    <span class="output-separator">/</span> matching settings
+                    <span class="output-separator">/</span> visible changes
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="console-caption">
+              <span class="caption-line"></span> AN AUDIT TRAIL, NOT A MAGIC
+              SCORE <span class="caption-line"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="signal-band" aria-label="Lighthouse categories">
+        <div class="container signal-inner">
+          <span class="signal-label">ONE WORKFLOW. FOUR SIGNALS.</span>
+          <div class="signal-list">
+            <span><i aria-hidden="true"></i> Performance</span>
+            <span><i aria-hidden="true"></i> Accessibility</span>
+            <span><i aria-hidden="true"></i> Best Practices</span>
+            <span><i aria-hidden="true"></i> SEO</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="workflow" class="content-section workflow-section">
+        <div class="container">
+          <div class="section-heading split-heading">
+            <div>
+              <span class="section-kicker">THE METHOD</span>
+              <h2>From a score to<br /><em>a sound decision.</em></h2>
+            </div>
+            <p>
+              A perfect number is not the workflow. Evidence is. The skill helps
+              your agent find what failed, trace the cause, make the smallest
+              useful change, and measure again.
+            </p>
+          </div>
+          <div class="workflow-grid">
+            <article class="step-card">
+              <div class="step-top">
+                <span class="step-number">01 / BASELINE</span
+                ><span class="step-icon" aria-hidden="true">↗</span>
+              </div>
+              <h3>Measure the real site.</h3>
+              <p>
+                Audit a production build or deployed URL across representative
+                routes, mobile and desktop. Repeat runs reveal noisy results.
+              </p>
+              <div class="step-footer">
+                JSON reports <span>→</span> median summary
+              </div>
+            </article>
+            <article class="step-card">
+              <div class="step-top">
+                <span class="step-number">02 / DIAGNOSE</span
+                ><span class="step-icon" aria-hidden="true">⌕</span>
+              </div>
+              <h3>Find the actual cause.</h3>
+              <p>
+                Inspect scored failures, console errors, affected resources, and
+                elements. Separate project fixes from hosting and third-party
+                limits.
+              </p>
+              <div class="step-footer">
+                Audit evidence <span>→</span> focused changes
+              </div>
+            </article>
+            <article class="step-card">
+              <div class="step-top">
+                <span class="step-number">03 / VERIFY</span
+                ><span class="step-icon" aria-hidden="true">✓</span>
+              </div>
+              <h3>Protect what works.</h3>
+              <p>
+                Rebuild and check behavior, keyboard access, and responsive
+                views. Compare reports with the same URL and Lighthouse
+                settings.
+              </p>
+              <div class="step-footer">
+                Before / after <span>→</span> honest results
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="capabilities" class="content-section capabilities-section">
+        <div class="container capabilities-layout">
+          <div class="capabilities-intro">
+            <span class="section-kicker">BUILT FOR THE WORK</span>
+            <h2>Useful beyond<br /><em>the homepage.</em></h2>
+            <p>
+              Bring the skill into an existing project. It is
+              framework-agnostic, but specific about how to test and report a
+              single-page app.
+            </p>
+            <a
+              class="text-link"
+              href="https://github.com/CajesJM/spa-lighthouse-optimizer/blob/master/SKILL.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Read the full skill <span aria-hidden="true">↗</span></a
+            >
+          </div>
+          <div class="capabilities-list">
+            <article>
+              <span class="capability-glyph" aria-hidden="true">◎</span>
+              <div>
+                <h3>Route-aware audits</h3>
+                <p>
+                  Check meaningful pages and direct navigation, not just a
+                  polished root URL.
+                </p>
+              </div>
+            </article>
+            <article>
+              <span class="capability-glyph" aria-hidden="true">▤</span>
+              <div>
+                <h3>Actionable reports</h3>
+                <p>
+                  Turn Lighthouse JSON into readable failing audits and concrete
+                  evidence.
+                </p>
+              </div>
+            </article>
+            <article>
+              <span class="capability-glyph" aria-hidden="true">⌁</span>
+              <div>
+                <h3>Comparable results</h3>
+                <p>
+                  Catch mismatched URLs, devices, versions, or settings before
+                  claiming improvement.
+                </p>
+              </div>
+            </article>
+            <article>
+              <span class="capability-glyph" aria-hidden="true">◇</span>
+              <div>
+                <h3>Behavior preserved</h3>
+                <p>
+                  Optimize without removing required features or treating
+                  automated scores as the whole story.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="install" class="content-section install-section">
+        <div class="container install-layout">
+          <div class="install-copy">
+            <span class="section-kicker">START HERE</span>
+            <h2>Install the skill.<br /><em>Keep your stack.</em></h2>
+            <p>
+              The skill lives in your agent's skills directory, not inside every
+              website. Open your SPA project afterward and ask the agent to run
+              an audit.
+            </p>
+            <p class="install-caveat">
+              npm and Yarn commands require the package to be published. Until
+              then, install from this repository.
+            </p>
+            <a
+              class="text-link"
+              href="https://github.com/CajesJM/spa-lighthouse-optimizer#1-install-the-skill"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Installation details <span aria-hidden="true">↗</span></a
+            >
+          </div>
+          <div class="install-card">
+            <div class="install-card-header">
+              <span>INSTALL / CODEX</span
+              ><span class="card-spark" aria-hidden="true">✳</span>
+            </div>
+            <div
+              class="install-tabs"
+              role="tablist"
+              aria-label="Install method"
+            >
+              <button
+                type="button"
+                role="tab"
+                id="install-npm"
+                aria-selected="false"
+                aria-controls="install-panel-npm"
+                tabindex="-1"
+                data-install="npm"
+              >
+                npm
+              </button>
+              <button
+                type="button"
+                role="tab"
+                id="install-yarn"
+                aria-selected="false"
+                aria-controls="install-panel-yarn"
+                tabindex="-1"
+                data-install="yarn"
+              >
+                Yarn
+              </button>
+              <button
+                type="button"
+                role="tab"
+                id="install-source"
+                aria-selected="true"
+                aria-controls="install-panel-source"
+                data-install="source"
+              >
+                From source
+              </button>
+            </div>
+            <div
+              class="install-panel"
+              id="install-panel-npm"
+              role="tabpanel"
+              aria-labelledby="install-npm"
+              hidden
+            >
+              <code>npx spa-lighthouse-optimizer</code>
+              <p>Available after npm publication.</p>
+            </div>
+            <div
+              class="install-panel"
+              id="install-panel-yarn"
+              role="tabpanel"
+              aria-labelledby="install-yarn"
+              hidden
+            >
+              <code>yarn dlx spa-lighthouse-optimizer</code>
+              <p>Available after npm publication. Requires Yarn 2+.</p>
+            </div>
+            <div
+              class="install-panel"
+              id="install-panel-source"
+              role="tabpanel"
+              aria-labelledby="install-source"
+            >
+              <code>npm ci<br />node scripts/install.mjs</code>
+              <p>Run from a checkout of this repository.</p>
+            </div>
+            <button class="copy-button" type="button">
+              <span class="copy-icon" aria-hidden="true">⧉</span
+              ><span class="copy-label" aria-live="polite">Copy command</span>
+            </button>
+            <div class="install-card-footer">
+              <span class="footer-dot" aria-hidden="true"></span> Node.js 20+
+              and Chrome / Chromium required for audits
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing-section">
+        <div class="container closing-inner">
+          <div>
+            <span class="section-kicker">THE BOTTOM LINE</span>
+            <h2>Chase better pages.<br /><em>Report real scores.</em></h2>
+            <p>
+              100 in every category is a target, never a promise. Your users,
+              your site, and honest measurements come first.
+            </p>
+          </div>
+          <a
+            class="button button-primary"
+            href="https://github.com/CajesJM/spa-lighthouse-optimizer"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Explore on GitHub <span aria-hidden="true">↗</span></a
+          >
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <a class="brand" href="#top"
+          ><span class="brand-mark small" aria-hidden="true"
+            ><span></span><span></span><span></span><span></span></span
+          ><span>SPA<span class="brand-divider">/</span>LIGHTHOUSE</span></a
+        ><span>Measure carefully. Improve deliberately.</span
+        ><a
+          href="https://github.com/CajesJM/spa-lighthouse-optimizer"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub ↗</a
+        >
+      </div>
+    </footer>
+  </body>
+</html>

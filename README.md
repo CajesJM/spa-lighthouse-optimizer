@@ -2,6 +2,8 @@
 
 An installable Agent Skill that helps a coding agent **audit and improve an existing single-page app (SPA)** across Lighthouse Performance, Accessibility, Best Practices, and SEO. It works with any frontend framework because it measures the finished website, then guides changes in that website's own repository.
 
+The [showcase landing page](docs/index.html) lives in `docs/`. To preview it locally, run `python -m http.server 8000 --directory docs` and open `http://localhost:8000`.
+
 | 🟦 Install once | 🟩 Open your project |
 | --- | --- |
 | Install the skill in your agent's skills directory, outside your website. | Start a new agent session in the website repository and ask it to use the skill. |
